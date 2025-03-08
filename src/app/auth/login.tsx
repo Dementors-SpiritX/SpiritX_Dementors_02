@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/card';
 
 // import { Label } from "@/components/ui/label";
-import { BsFillQuestionCircleFill } from 'react-icons/bs';
+import { RiLoginCircleFill } from "react-icons/ri";
 import { login } from '../../lib/loginActions';
 import { useState } from 'react';
 import { Loader } from 'lucide-react';
@@ -138,15 +138,12 @@ export default function LoginForm() {
 			</CardContent>
 
 			<CardFooter className='flex justify-between text-sm text-gray-500'>
-				<a href='#' className='hover:underline'>
-					Public reservations
-				</a>
-
 				<div className='flex items-center space-x-2'>
-					<BsFillQuestionCircleFill />
+				
+					<RiLoginCircleFill />
 
 					<a href='#' className='hover:underline'>
-						Lost Password?
+						Create an Account
 					</a>
 				</div>
 			</CardFooter>
