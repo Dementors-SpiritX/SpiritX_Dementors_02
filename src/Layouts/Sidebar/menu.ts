@@ -1,5 +1,12 @@
 // Menu icons
-import { Users, UserSearch, FileChartColumn } from "lucide-react";
+import {
+	Users,
+	CircleDollarSign,
+	FileChartColumn,
+	TrendingUp,
+	ShieldHalf,
+	Bot,
+} from "lucide-react";
 
 // Menu items for admin
 export const adminMenu = [
@@ -7,12 +14,6 @@ export const adminMenu = [
 		title: "Players",
 		url: "/admin/players",
 		icon: Users,
-	},
-
-	{
-		title: "Player Stats",
-		url: "/admin/stats",
-		icon: UserSearch,
 	},
 	{
 		title: "Tournement Summary",
@@ -29,33 +30,23 @@ export const userMenu = [
 		icon: Users,
 	},
 	{
-		title: "Select your team",
-		url: "user/team",
-		icon: Users,
-	},
-	{
-		title: "Select your team",
-		url: "user/select-team",
-		icon: Users,
-	},
-	{
 		title: "Team",
 		url: "user/team",
-		icon: Users,
+		icon: ShieldHalf,
 	},
 	{
 		title: "Budget",
 		url: "user/budget",
-		icon: Users,
+		icon: CircleDollarSign,
 	},
 	{
 		title: "Leaderboard",
 		url: "user/leaderboard",
-		icon: Users,
+		icon: TrendingUp,
 	},
 	{
 		title: "Spiriter",
 		url: "user/spiriter",
-		icon: Users,
+		icon: Bot,
 	},
 ];
