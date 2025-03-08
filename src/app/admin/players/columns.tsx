@@ -10,7 +10,7 @@ export type Player = {
 	ballsFaced: number;
 	inningsPlayed: number;
 	wickets: number;
-	oversBalled: number;
+	oversBowled: number;
 	runsConceded: number;
 };
 
@@ -44,8 +44,8 @@ export const columns: ColumnDef<Player>[] = [
 		header: "Wickets",
 	},
 	{
-		accessorKey: "oversBalled",
-		header: "Overs Balled",
+		accessorKey: "oversBowled",
+		header: "Overs Bowled",
 	},
 	{
 		accessorKey: "runsConceded",

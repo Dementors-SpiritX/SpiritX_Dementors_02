@@ -1,31 +1,33 @@
+"use client";
+
 import SidebarLayout from "@/Layouts/Sidebar/Layout";
 import { Player, columns } from "./columns";
 import { DataTable } from "./dataTable";
+import { getPlayers } from "./getPlayers";
+import { useEffect, useState } from "react";
 
-async function getData(): Promise<Player[]> {
-	// Fetch data
-	return [
-		{
-			name: "Chamika Chandimal",
-			university: "University of the Visual & Performing Artsing",
-			category: "Batsman",
-			totalRuns: 530,
-			ballsFaced: 588,
-			inningsPlayed: 10,
-			wickets: 0,
-			oversBalled: 3,
-			runsConceded: 21,
-		},
-	];
-}
+export default function Players() {
+	const [players, setPlayers] = useState<Player[] | null>(null);
 
-export default async function Players() {
-	const data = await getData();
+	useEffect(() => {
+		async function fetchPlayers() {
+			const data = await getPlayers();
+			setPlayers(data);
+		}
+
+		fetchPlayers();
+	}, []);
 
 	return (
 		<SidebarLayout>
 			<div className="container mx-auto">
-				<DataTable columns={columns} data={data} />
+				<h1 className="text-2xl font-bold mb-4">Players List</h1>
+
+				{players === null ? (
+					<p>Loading players...</p>
+				) : (
+					<DataTable columns={columns} data={players} />
+				)}
 			</div>
 		</SidebarLayout>
 	);
