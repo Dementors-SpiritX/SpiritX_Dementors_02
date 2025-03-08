@@ -1,33 +1,52 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import { createClient } from '@/lib/supabaseServer';
 
 export async function signup(formData: FormData) {
-	const supabase = await createClient();
+	const supabase = createClient();
 
-	// type-casting here for convenience
-	const data = {
-		email: formData.get('email') as string,
-		password: formData.get('password') as string,
-		phone: formData.get('phone') as string,
-		username: formData.get('username') as string,
-	};
+	const email = formData.get('email') as string;
+	const password = formData.get('password') as string;
+	const fullname = formData.get('fullname') as string;
+	const username = formData.get('username') as string;
 
-	// Handle missing fields properly
-	if (!data.username || !data.email || !data.phone || !data.password) {
-		redirect('/auth/error');
+	// Validate required fields
+	if (!email || !password || !fullname || !username) {
+		return { success: false, message: 'All fields are required.' };
 	}
 
-	const { error } = await supabase.auth.signUp(data);
+	// Sign up the user in Supabase Auth
+	const { data, error } = await (await supabase).auth.signUp({
+		email,
+		password
+	});
 
+	// Check if auth signup failed
 	if (error) {
-		redirect('/auth/error');
+		return { success: false, message: error.message };
 	}
 
-	await supabase.from('users').insert(data);
+	// Extract the user ID from Auth response
+	const userId = data.user?.id;
+	if (!userId) {
+		return { success: false, message: 'Failed to retrieve user ID' };
+	}
 
-	// return success instead of redirecting
-	return { success: true, message: 'Invitation sent to user email.' };
+	//Insert the user’s additional details into the `users` table
+	const { error: dbError } = await (await supabase).from('users').insert([
+		{
+			id: userId, // Store the same ID from auth.users
+			fullname,
+			username,
+			email
+		}
+	]);
+
+	// If there's an error inserting into `users`, return it
+	if (dbError) {
+		return { success: false, message: dbError.message };
+	}
+
+	// Everything successful
+	return { success: true, message: 'User registered successfully' };
 }

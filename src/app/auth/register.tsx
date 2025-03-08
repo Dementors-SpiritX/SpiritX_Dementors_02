@@ -42,9 +42,6 @@ const formSchema = z
       .min(6, "Password must be at least 6 characters long.")
       .max(20, "Password must be at most 20 characters long."),
     confirmPassword: z.string(),
-    terms: z.literal(true, {
-      errorMap: () => ({ message: "You must agree to the Terms & Conditions." }),
-    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match.",
@@ -72,13 +69,12 @@ export default function SignupForm({ onSwitch }: { onSwitch: () => void }) {
     formData.append("fullname", values.fullname);
     formData.append("username", values.username);
     formData.append("email", values.email);
-    formData.append("password", values.password);
-    formData.append("confirmPassword", values.confirmPassword);
-  
+    formData.append("password", values.password); // No need for confirmPassword
+
     setIsLoading(true);
     try {
       const result = await signup(formData);
-  
+
       if (result.success) {
         setShowSuccessPopup(true);
       } else {
@@ -90,7 +86,6 @@ export default function SignupForm({ onSwitch }: { onSwitch: () => void }) {
       setIsLoading(false);
     }
   }
-  
 
   return (
     <>
@@ -155,7 +150,15 @@ export default function SignupForm({ onSwitch }: { onSwitch: () => void }) {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Enter password" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Enter password"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e); // Update field value
+                          form.trigger("confirmPassword"); // Trigger validation for confirmPassword
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -184,8 +187,8 @@ export default function SignupForm({ onSwitch }: { onSwitch: () => void }) {
               <Button
                 type="submit"
                 className="w-full mt-5 bg-black text-white hover:bg-gray-800 
-              hover:shadow-lg hover:scale-105 transition-all duration-300 flex 
-              items-center justify-center space-x-2"
+                hover:shadow-lg hover:scale-105 transition-all duration-300 flex 
+                items-center justify-center space-x-2"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -203,16 +206,16 @@ export default function SignupForm({ onSwitch }: { onSwitch: () => void }) {
 
         {/* Footer */}
         <CardFooter className="flex justify-between text-sm text-gray-500">
-        <a
-          href="#"
-          className="hover:underline"
-          onClick={(e) => {
-            e.preventDefault(); // Prevent page refresh
-            onSwitch();
-          }}
-        >
-          Already have an Account?
-        </a>
+          <a
+            href="#"
+            className="hover:underline"
+            onClick={(e) => {
+              e.preventDefault();
+              onSwitch();
+            }}
+          >
+            Already have an Account?
+          </a>
         </CardFooter>
       </Card>
 
