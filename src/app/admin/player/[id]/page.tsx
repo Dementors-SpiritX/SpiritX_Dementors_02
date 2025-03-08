@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabaseClient";
+import SidebarLayout from "@/Layouts/Sidebar/Layout";
 
 type Player = {
 	id: string;
@@ -13,7 +14,7 @@ type Player = {
 	ballsFaced: number;
 	inningsPlayed: number;
 	wickets: number;
-	oversBalled: number;
+	oversBowled: number;
 	runsConceded: number;
 };
 
@@ -50,24 +51,34 @@ export default function PlayerPage() {
 	}, [id]);
 
 	if (loading) {
-		return <p>Loading...</p>;
+		return (
+			<SidebarLayout>
+				<p>Loading...</p>
+			</SidebarLayout>
+		);
 	}
 
 	if (!player) {
-		return <p>Player not found</p>;
+		return (
+			<SidebarLayout>
+				<p>Player not found</p>
+			</SidebarLayout>
+		);
 	}
 
 	return (
-		<div>
-			<h1>Player: {player.name}</h1>
-			<p>University: {player.university}</p>
-			<p>Category: {player.category}</p>
-			<p>Total Runs: {player.totalRuns}</p>
-			<p>Balls Faced: {player.ballsFaced}</p>
-			<p>Innings Played: {player.inningsPlayed}</p>
-			<p>Wickets: {player.wickets}</p>
-			<p>Overs Balled: {player.oversBalled}</p>
-			<p>Runs Conceded: {player.runsConceded}</p>
-		</div>
+		<SidebarLayout>
+			<div>
+				<h1>Player: {player.name}</h1>
+				<p>University: {player.university}</p>
+				<p>Category: {player.category}</p>
+				<p>Total Runs: {player.totalRuns}</p>
+				<p>Balls Faced: {player.ballsFaced}</p>
+				<p>Innings Played: {player.inningsPlayed}</p>
+				<p>Wickets: {player.wickets}</p>
+				<p>Overs Bowled: {player.oversBowled}</p>
+				<p>Runs Conceded: {player.runsConceded}</p>
+			</div>
+		</SidebarLayout>
 	);
 }
