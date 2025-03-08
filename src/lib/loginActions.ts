@@ -19,9 +19,9 @@ export async function login(formData: FormData) {
 	if (error) {
 		// Encode error message in URL and redirect
 		const errorMessage = encodeURIComponent(error.message);
-		redirect(`/login/error?message=${errorMessage}`);
+		redirect(`/auth/error?message=${errorMessage}`);
 	}
 
 	revalidatePath('/', 'layout');
-	redirect('/dashboard');
+	redirect('/admin');
 }
