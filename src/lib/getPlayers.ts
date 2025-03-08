@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabaseClient";
-import { Player } from "./columns";
+import { Player as PlayerType } from "@/types/Player";
 
-export async function getPlayers(): Promise<Player[]> {
+export async function getPlayers(): Promise<PlayerType[]> {
 	const supabase = createClient();
 
 	const { data, error } = await supabase.from("players").select("*");
@@ -11,5 +11,5 @@ export async function getPlayers(): Promise<Player[]> {
 		return [];
 	}
 
-	return (data ?? []) as Player[];
+	return (data ?? []) as PlayerType[];
 }

@@ -31,7 +31,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 	const router = useRouter();
 
 	const handleNavigate = () => {
-		router.push(`/user/player/${id}`);
+		router.push(`/admin/player/${id}`);
 	};
 
 	return (
@@ -41,7 +41,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 					<AvatarImage src={image} />
 					<AvatarFallback>...</AvatarFallback>
 				</Avatar>
-				<div className="w-[120px">
+				<div className="w-[140px]">
 					<CardTitle>{name}</CardTitle>
 					<CardDescription>{category}</CardDescription>
 				</div>
