@@ -8,12 +8,6 @@ export const adminMenu = [
 		url: "/admin/players",
 		icon: Users,
 	},
-
-	{
-		title: "Player Stats",
-		url: "/admin/stats",
-		icon: UserSearch,
-	},
 	{
 		title: "Tournement Summary",
 		url: "/admin/summary",
