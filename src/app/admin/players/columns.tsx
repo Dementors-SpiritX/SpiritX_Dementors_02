@@ -14,21 +14,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Player as PlayerType } from "@/types/Player";
 
-export type Player = {
-	id: string;
-	name: string;
-	university: string;
-	category: string;
-	totalRuns: number;
-	ballsFaced: number;
-	inningsPlayed: number;
-	wickets: number;
-	oversBowled: number;
-	runsConceded: number;
-};
-
-const PlayerActions = ({ player }: { player: Player }) => {
+const PlayerActions = ({ player }: { player: PlayerType }) => {
 	const router = useRouter();
 
 	const handleViewClick = () => {
@@ -80,7 +68,7 @@ const PlayerActions = ({ player }: { player: Player }) => {
 	);
 };
 
-export const columns: ColumnDef<Player>[] = [
+export const columns: ColumnDef<PlayerType>[] = [
 	{
 		accessorKey: "name",
 		header: "Name",

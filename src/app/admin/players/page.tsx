@@ -1,13 +1,14 @@
 "use client";
 
 import SidebarLayout from "@/Layouts/Sidebar/Layout";
-import { Player, columns } from "./columns";
+import { columns } from "./columns";
+import { Player as PlayerType } from "@/types/Player";
 import { DataTable } from "./dataTable";
-import { getPlayers } from "./getPlayers";
+import { getPlayers } from "@/lib/getPlayers";
 import { useEffect, useState } from "react";
 
 export default function Players() {
-	const [players, setPlayers] = useState<Player[] | null>(null);
+	const [players, setPlayers] = useState<PlayerType[] | null>(null);
 
 	useEffect(() => {
 		async function fetchPlayers() {
