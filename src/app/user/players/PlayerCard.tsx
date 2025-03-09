@@ -15,7 +15,8 @@ import { Button } from "@/components/ui/button";
 
 interface PlayerCardProps {
 	id: string;
-	name: string;
+	fname: string;
+	lname: string;
 	category: string;
 	ratings: string;
 	image?: string;
@@ -23,7 +24,8 @@ interface PlayerCardProps {
 
 const PlayerCard: React.FC<PlayerCardProps> = ({
 	id,
-	name,
+	fname,
+	lname,
 	category,
 	ratings,
 	image = "https://github.com/shadcn.png",
@@ -37,12 +39,15 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 	return (
 		<Card className="flex flex-col">
 			<CardHeader className="flex flex-row items-center gap-4">
-				<Avatar className="w-10 h-10">
+				<Avatar className="w-12 h-12">
 					<AvatarImage src={image} />
 					<AvatarFallback>...</AvatarFallback>
 				</Avatar>
-				<div className="w-[140px]">
-					<CardTitle>{name}</CardTitle>
+				<div className="w-[120px]">
+					<CardTitle className="flex flex-col">
+						<span>{fname}</span>
+						<span>{lname}</span>
+					</CardTitle>
 					<CardDescription>{category}</CardDescription>
 				</div>
 			</CardHeader>

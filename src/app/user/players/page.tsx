@@ -27,11 +27,14 @@ export default function Players() {
 						<p>Loading players...</p>
 					) : (
 						players.map((player) => {
+							const [firstName, lastName] =
+								player.name.split(" ");
 							return (
 								<PlayerCard
 									key={player.id}
 									id={player.id}
-									name={player.name}
+									fname={firstName}
+									lname={lastName}
 									category={player.category}
 									ratings="13.2"
 								></PlayerCard>
