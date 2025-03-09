@@ -24,6 +24,7 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer";
+import { toast } from "sonner";
 
 interface PlayerCardProps {
 	id: string;
@@ -53,8 +54,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 	const handleNavigate = () => {
 		router.push(`/admin/player/${id}`);
 	};
-
-	const playerQuickView = () => {};
 
 	return (
 		<Card className="flex flex-col">
@@ -87,7 +86,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 						<Button
 							variant="outline"
 							className="cursor-pointer"
-							onClick={playerQuickView}
+							onClick={() => toast("Player Added to Team!")}
 						>
 							Add
 						</Button>
@@ -97,13 +96,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 				{isSelecting && (
 					<>
 						<Drawer>
-							<DrawerTrigger>
-								<Button
-									variant="ghost"
-									className="cursor-pointer"
-								>
-									<Info />
-								</Button>
+							<DrawerTrigger className="cursor-pointer">
+								<Info width="18px" />
 							</DrawerTrigger>
 							<DrawerContent>
 								<DrawerHeader>

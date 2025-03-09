@@ -6,6 +6,7 @@ import { Player as PlayerType } from "@/types/Player";
 import { getPlayers } from "@/lib/getPlayers";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function Players() {
 	const [players, setPlayers] = useState<PlayerType[] | null>(null);
@@ -42,7 +43,10 @@ export default function Players() {
 					{isSelecting ? (
 						<div className="flex gap-4">
 							<Button
-								onClick={handleConfirmSelection}
+								onClick={() => {
+									handleConfirmSelection();
+									toast("Players Added to Team!");
+								}}
 								className="cursor-pointer"
 							>
 								OK
