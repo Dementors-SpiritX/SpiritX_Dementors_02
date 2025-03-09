@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 export default function Players() {
 	const [players, setPlayers] = useState<PlayerType[] | null>(null);
+	const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
 
 	useEffect(() => {
 		async function fetchPlayers() {
@@ -21,7 +22,6 @@ export default function Players() {
 	}, []);
 
 	const [isSelecting, setIsSelecting] = useState(false);
-	const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
 
 	const toggleSelection = (id: string) => {
 		setSelectedPlayers((prev) =>
@@ -42,6 +42,9 @@ export default function Players() {
 					<h1 className="text-2xl font-bold ">Players List</h1>
 					{isSelecting ? (
 						<div className="flex gap-4">
+							<p className="text-lg font-semibold">
+								Selected: {selectedPlayers.length}
+							</p>
 							<Button
 								onClick={() => {
 									handleConfirmSelection();
