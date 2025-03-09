@@ -12,6 +12,18 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Info } from "lucide-react";
+
+import {
+	Drawer,
+	DrawerClose,
+	DrawerContent,
+	DrawerDescription,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from "@/components/ui/drawer";
 
 interface PlayerCardProps {
 	id: string;
@@ -20,6 +32,9 @@ interface PlayerCardProps {
 	category: string;
 	ratings: string;
 	image?: string;
+	isSelecting: boolean;
+	isSelected: boolean;
+	toggleSelection: (id: string) => void;
 }
 
 const PlayerCard: React.FC<PlayerCardProps> = ({
@@ -29,12 +44,17 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 	category,
 	ratings,
 	image = "https://github.com/shadcn.png",
+	isSelecting,
+	isSelected,
+	toggleSelection,
 }) => {
 	const router = useRouter();
 
 	const handleNavigate = () => {
 		router.push(`/admin/player/${id}`);
 	};
+
+	const playerQuickView = () => {};
 
 	return (
 		<Card className="flex flex-col">
@@ -55,16 +75,66 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 				<span>Ratings: {ratings}</span>
 			</CardContent>
 			<CardFooter className="flex flex-row gap-2">
-				<Button
-					variant="outline"
-					className="cursor-pointer"
-					onClick={handleNavigate}
-				>
-					View
-				</Button>
-				<Button variant="outline" className="cursor-pointer">
-					Add
-				</Button>
+				{!isSelecting && (
+					<>
+						<Button
+							variant="outline"
+							className="cursor-pointer"
+							onClick={handleNavigate}
+						>
+							View
+						</Button>
+						<Button
+							variant="outline"
+							className="cursor-pointer"
+							onClick={playerQuickView}
+						>
+							Add
+						</Button>
+					</>
+				)}
+
+				{isSelecting && (
+					<>
+						<Drawer>
+							<DrawerTrigger>
+								<Button
+									variant="ghost"
+									className="cursor-pointer"
+								>
+									<Info />
+								</Button>
+							</DrawerTrigger>
+							<DrawerContent>
+								<DrawerHeader>
+									<DrawerTitle>
+										{fname} {lname}
+									</DrawerTitle>
+									<DrawerDescription>
+										{category}
+									</DrawerDescription>
+								</DrawerHeader>
+								<DrawerFooter>
+									<DrawerClose>
+										<Button
+											variant="outline"
+											className="cursor-pointer"
+										>
+											Close
+										</Button>
+									</DrawerClose>
+								</DrawerFooter>
+							</DrawerContent>
+						</Drawer>
+
+						<input
+							type="checkbox"
+							checked={isSelected}
+							onChange={() => toggleSelection(id)}
+							className="mr-2 cursor-pointer"
+						/>
+					</>
+				)}
 			</CardFooter>
 		</Card>
 	);
